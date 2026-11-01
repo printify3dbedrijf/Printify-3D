@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printify3D App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff6600">
+</head>
+<body>
+
+    <!-- Header met snelle linkjes -->
+    <header>
+        <h1>Printify3D</h1>
+        <div class="social-links">
+            <a href="https://bit.ly/printify3d" target="_blank">Shop</a>
+            <a href="https://wa.me/" target="_blank">WhatsApp</a>
+            <a href="https://youtube.com" target="_blank">YouTube</a>
+        </div>
+    </header>
+
+    <!-- Navigatie tabs -->
+    <nav class="tabs">
+        <button class="tab-btn active" onclick="switchTab('shop')">Shop</button>
+        <button class="tab-btn active" onclick="switchTab('updates')">Updates</button>
+    </nav>
+
+    <!-- Inhoud van de app -->
+    <main>
+        <!-- Shop Sectie -->
+        <section id="shop-section" class="tab-content active">
+            <h2>Onze Producten</h2>
+            <div class="product-grid" id="product-container">
+                <!-- Producten komen hier via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Updates / Kanaal Sectie -->
+        <section id="updates-section" class="tab-content">
+            <h2>Laatste Updates</h2>
+            <div id="updates-container">
+                <div class="update-card">
+                    <h3>Welkom in ons kanaal!</h3>
+                    <p>Hier vind je straks alle nieuwtjes, foto's en toffe aankondigingen.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
