@@ -1,54 +1,77 @@
-// Functie om te wisselen tussen de tabbladen (Shop en Updates)
-function switchTab(tabName) {
-    // Haal alle tab-knoppen en inhoud-schermen weg
-    const buttons = document.querySelectorAll('.tab-btn');
-    const contents = document.querySelectorAll('.tab-content');
+let cart = [];
 
-    buttons.forEach(btn => btn.classList.remove('active'));
-    contents.forEach(content => content.classList.remove('active'));
+// Switchen tussen tabs
+function showTab(tabName) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
 
-    // Zet de juiste actieve tab aan
-    if (tabName === 'shop') {
-        document.getElementById('shop-section').classList.add('active');
-        buttons[0].classList.add('active');
-    } else if (tabName === 'updates') {
-        document.getElementById('updates-section').classList.add('active');
-        buttons[1].classList.add('active');
-    }
+    document.getElementById(`tab-${tabName}`).classList.add('active');
+    event.currentTarget.classList.add('active');
 }
 
-// Voorbeeld producten en updates inladen
-const products = [
-    { name: "3D Geprinte Dino Sleutelhanger", price: "€4,99", desc: "Supergave flexibele dinosaurus voor aan je tas of sleutelbos." },
-    { name: "Fidget Toy Kubus", price: "€7,50", desc: "Ideaal om mee te friemelen tijdens school of huiswerk." },
-    { name: "Shark Telefoonhouder", price: "€9,99", desc: "Handige en unieke standaard voor je mobiele telefoon." }
-];
+// Toevoegen aan winkelmand
+function addToCart(title, price) {
+    cart.push({ title, price });
+    updateCartUI();
+    alert(`${title} is toegevoegd aan je winkelmand!`);
+}
 
-const updates = [
-    { title: "Nieuwe kleuren binnen!", text: "We hebben prachtige nieuwe filamenten binnengekregen, waaronder glans-paars en regenboog!" },
-    { title: "Snelle levering", text: "Alle orders worden binnen 48 uur geprint en verzonden." }
-];
+// Update winkelmand weergave
+function updateCartUI() {
+    const cartCountEl = document.getElementById('cart-count');
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartTotalEl = document.getElementById('cart-total');
 
-// Automatisch vullen van producten en updates in de app
-window.onload = function() {
-    const productContainer = document.getElementById('product-container');
-    products.forEach(p => {
-        productContainer.innerHTML += `
-            <div class="product-card">
-                <h3>${p.name}</h3>
-                <p>${p.desc}</p>
-                <div class="price">${p.price}</div>
+    cartCountEl.textContent = cart.length;
+
+    if (cart.length === 0) {
+        cartItemsEl.innerHTML = '<p class="empty-msg">Je winkelmandje is nog leeg.</p>';
+        cartTotalEl.textContent = '€ 0,00';
+        return;
+    }
+
+    let itemsHTML = '';
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        total += item.price;
+        itemsHTML += `
+            <div class="cart-item">
+                <span>${item.title}</span>
+                <strong>€ ${item.price.toFixed(2)}</strong>
             </div>
         `;
     });
 
-    const updatesContainer = document.getElementById('updates-container');
-    updates.forEach(u => {
-        updatesContainer.innerHTML += `
-            <div class="update-card" style="margin-top: 10px;">
-                <h3>${u.title}</h3>
-                <p>${u.text}</p>
-            </div>
-        `;
-    });
-};
+    cartItemsEl.innerHTML = itemsHTML;
+    cartTotalEl.textContent = `€ ${total.toFixed(2)}`;
+}
+
+// Bestelling verwerken via e-mail
+function handleCheckout(event) {
+    event.preventDefault();
+
+    if (cart.length === 0) {
+        alert('Je winkelmandje is nog leeg!');
+        return;
+    }
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const notes = document.getElementById('notes').value;
+
+    let orderList = cart.map(item => `- ${item.title} (€${item.price.toFixed(2)})`).join('\n');
+    let total = cart.reduce((sum, item) => sum + item.price, 0);
+
+    let mailSubject = encodeURIComponent(`Nieuwe Bestelling Printify3D - ${name}`);
+    let mailBody = encodeURIComponent(
+        `Nieuwe Bestelling van ${name}\n` +
+        `E-mail: ${email}\n\n` +
+        `Bestelde items:\n${orderList}\n\n` +
+        `Totaalbedrag: €${total.toFixed(2)}\n\n` +
+        `Opmerkingen:\n${notes}`
+    );
+
+    // Opent de e-mail client van de gebruiker met alle bestelgegevens ingevuld
+    window.location.href = `mailto:contact@printify3d.nl?subject=${mailSubject}&body=${mailBody}`;
+}

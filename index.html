@@ -2,48 +2,105 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Printify3D App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Printify3D Store</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ff6600">
+    <meta name="theme-color" content="#111827">
 </head>
 <body>
-
-    <!-- Header met snelle linkjes -->
-    <header>
+    <header class="app-header">
         <h1>Printify3D</h1>
-        <div class="social-links">
-            <a href="https://bit.ly/printify3d" target="_blank">Shop</a>
-            <a href="https://wa.me/" target="_blank">WhatsApp</a>
-            <a href="https://youtube.com" target="_blank">YouTube</a>
-        </div>
+        <p>Custom 3D Printing & Fidgets</p>
     </header>
 
-    <!-- Navigatie tabs -->
-    <nav class="tabs">
-        <button class="tab-btn active" onclick="switchTab('shop')">Shop</button>
-        <button class="tab-btn active" onclick="switchTab('updates')">Updates</button>
+    <!-- Navigatietabs -->
+    <nav class="tab-bar">
+        <button class="tab-btn active" onclick="showTab('shop')">Winkel</button>
+        <button class="tab-btn" onclick="showTab('cart')">Winkelmand (<span id="cart-count">0</span>)</button>
+        <button class="tab-btn" onclick="showTab('info')">Over Ons</button>
     </nav>
 
-    <!-- Inhoud van de app -->
-    <main>
-        <!-- Shop Sectie -->
-        <section id="shop-section" class="tab-content active">
-            <h2>Onze Producten</h2>
-            <div class="product-grid" id="product-container">
-                <!-- Producten komen hier via JavaScript -->
+    <main class="app-content">
+        <!-- TAB 1: Shop & Producten -->
+        <section id="tab-shop" class="tab-content active">
+            <h2>Producten</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&w=500&q=80" alt="Fidget Spinner / Toy">
+                    <div class="product-info">
+                        <h3>Custom Fidget Toy</h3>
+                        <p class="description">Unieke multi-color fidget toy, perfect voor op school of kantoor.</p>
+                        <p class="price">€ 4,95</p>
+                        <button onclick="addToCart('Custom Fidget Toy', 4.95)">+ In winkelmand</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=500&q=80" alt="Dino Sleutelhanger">
+                    <div class="product-info">
+                        <h3>Dino Sleutelhanger</h3>
+                        <p class="description">Gefabriceerd met beweegbare gewrichten en stevig materiaal.</p>
+                        <p class="price">€ 3,50</p>
+                        <button onclick="addToCart('Dino Sleutelhanger', 3.50)">+ In winkelmand</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=500&q=80" alt="Haai Sleutelhanger">
+                    <div class="product-info">
+                        <h3>Flexibele Haai Sleutelhanger</h3>
+                        <p class="description">Geprint in hoogwaardige kleuren. Een geweldige blikvanger!</p>
+                        <p class="price">€ 3,95</p>
+                        <button onclick="addToCart('Flexibele Haai Sleutelhanger', 3.95)">+ In winkelmand</button>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Updates / Kanaal Sectie -->
-        <section id="updates-section" class="tab-content">
-            <h2>Laatste Updates</h2>
-            <div id="updates-container">
-                <div class="update-card">
-                    <h3>Welkom in ons kanaal!</h3>
-                    <p>Hier vind je straks alle nieuwtjes, foto's en toffe aankondigingen.</p>
-                </div>
+        <!-- TAB 2: Winkelmandje & Afrekenen -->
+        <section id="tab-cart" class="tab-content">
+            <h2>Mijn Winkelmand</h2>
+            <div id="cart-items" class="cart-items-list">
+                <p class="empty-msg">Je winkelmandje is nog leeg.</p>
+            </div>
+            
+            <div class="cart-summary">
+                <h3>Totaal: <span id="cart-total">€ 0,00</span></h3>
+            </div>
+
+            <form id="checkout-form" onsubmit="handleCheckout(event)" class="checkout-form">
+                <h3>Plaats je bestelling</h3>
+                <label for="name">Naam:</label>
+                <input type="text" id="name" required placeholder="Je voor- en achternaam">
+
+                <label for="email">E-mailadres:</label>
+                <input type="email" id="email" required placeholder="je@email.com">
+
+                <label for="notes">Opmerkingen / Specifieke Kleuren:</label>
+                <textarea id="notes" rows="3" placeholder="Bijv. Welke kleuren wil je voor je 3D print?"></textarea>
+
+                <button type="submit" class="checkout-btn">Plaats Bestelling via E-mail</button>
+            </form>
+        </section>
+
+        <!-- TAB 3: Webshop Info & Contact -->
+        <section id="tab-info" class="tab-content">
+            <h2>Over Printify3D</h2>
+            <div class="info-card">
+                <h3>Wie zijn wij?</h3>
+                <p>Printify3D is gespecialiseerd in custom 3D prints, fidgets en unieke gadgets. Wij printen op bestelling met oog voor detail en kwaliteit.</p>
+                
+                <h3>Hoe werkt bestellen?</h3>
+                <ol>
+                    <li>Voeg je favoriete producten toe aan het winkelmandje.</li>
+                    <li>Vul je gegevens in en verzend de bestelling.</li>
+                    <li>Wij nemen per e-mail contact met je op om de betaling en verzending/afhandeling af te stemmen.</li>
+                </ol>
+
+                <h3>Contact & Service</h3>
+                <p><strong>E-mail:</strong> contact@printify3d.nl</p>
+                <p><strong>Locatie:</strong> Nederland</p>
             </div>
         </section>
     </main>

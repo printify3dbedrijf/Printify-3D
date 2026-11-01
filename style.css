@@ -1,81 +1,64 @@
-/* Strakke moderne app stijl */
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
-    background-color: #f4f4f9;
-    color: #333;
-    padding-bottom: 60px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f3f4f6;
+    margin: 0;
+    padding: 0;
+    color: #1f2937;
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* Header */
-header {
-    background-color: #111;
+.app-header {
+    background-color: #111827;
     color: white;
-    padding: 15px;
     text-align: center;
-}
-
-header h1 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #ff6600;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.social-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 0.9rem;
-    background: #333;
-    padding: 6px 12px;
-    border-radius: 20px;
-    transition: background 0.2s;
-}
-
-.social-links a:hover {
-    background: #ff6600;
-}
-
-/* Navigatie Tabs */
-.tabs {
-    display: flex;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 16px;
     position: sticky;
     top: 0;
     z-index: 100;
 }
 
+.app-header h1 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.app-header p {
+    margin: 4px 0 0;
+    font-size: 0.85rem;
+    color: #9ca3af;
+}
+
+.tab-bar {
+    display: flex;
+    background-color: #1f2937;
+    border-bottom: 2px solid #374151;
+}
+
 .tab-btn {
     flex: 1;
-    padding: 12px;
-    background: none;
+    padding: 12px 8px;
     border: none;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #666;
+    background: transparent;
+    color: #9ca3af;
+    font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
-    border-bottom: 3px solid transparent;
 }
 
 .tab-btn.active {
-    color: #ff6600;
-    border-bottom: 3px solid #ff6600;
+    color: #ffffff;
+    border-bottom: 3px solid #2563eb;
+    background-color: #111827;
 }
 
-/* Inhoud schermen */
-main {
-    padding: 15px;
+.app-content {
+    padding: 16px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .tab-content {
@@ -87,37 +70,144 @@ main {
 }
 
 h2 {
-    margin-bottom: 15px;
     font-size: 1.2rem;
+    margin-top: 0;
 }
 
-/* Product en Update kaarten */
+/* Producten Grid */
 .product-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.product-card, .update-card {
+.product-card {
     background: white;
-    padding: 15px;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: row;
 }
 
-.product-card h3, .update-card h3 {
-    font-size: 1.1rem;
-    margin-bottom: 5px;
+.product-card img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
 }
 
-.product-card p, .update-card p {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
+.product-info {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
 }
 
-.price {
+.product-info h3 {
+    margin: 0 0 4px;
+    font-size: 1rem;
+}
+
+.product-info .description {
+    margin: 0 0 8px;
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.product-info .price {
     font-weight: bold;
-    color: #ff6600;
-    font-size: 1.1rem;
+    color: #2563eb;
+    margin: 0 0 8px;
+}
+
+.product-info button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.product-info button:active {
+    background-color: #1d4ed8;
+}
+
+/* Winkelmand & Formulier */
+.cart-items-list {
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.empty-msg {
+    color: #9ca3af;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.cart-summary {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.checkout-form {
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkout-form label {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.checkout-form input, .checkout-form textarea {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.checkout-btn {
+    margin-top: 10px;
+    background-color: #16a34a;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Info card */
+.info-card {
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    line-height: 1.5;
+}
+
+.info-card h3 {
+    margin-top: 12px;
+    color: #111827;
 }
